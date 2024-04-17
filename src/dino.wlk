@@ -10,6 +10,7 @@ object juego{
 		game.title("Dino Game")
 		game.addVisual(suelo)
 		game.addVisual(cactus)
+		game.addVisual(pajaro)
 		game.addVisual(dino)
 		game.addVisual(reloj)
 	
@@ -23,6 +24,7 @@ object juego{
 		dino.iniciar()
 		reloj.iniciar()
 		cactus.iniciar()
+		pajaro.iniciar()
 	}
 	
 	method jugar(){
@@ -38,6 +40,7 @@ object juego{
 	method terminar(){
 		game.addVisual(gameOver)
 		cactus.detener()
+		pajaro.detener()
 		reloj.detener()
 		dino.morir()
 	}
@@ -122,7 +125,7 @@ object dino {
 	}
 	
 	method subir(){
-		position = position.up(1)
+		position = position.up(3)
 	}
 	
 	method bajar(){
@@ -137,5 +140,33 @@ object dino {
 	}
 	method estaVivo() {
 		return vivo
+	}
+}
+
+object pajaro {
+	 
+	var position = self.posicionInicial()
+
+	method image() = "cactus.png"
+	method position() = position
+	
+	method posicionInicial() = game.at(game.width()-3,suelo.position().up(1).y())
+
+	method iniciar(){
+		position = self.posicionInicial()
+		game.onTick(velocidad,"moverCactus",{self.mover()})
+	}
+	
+	method mover(){
+		position = position.left(1)
+		if (position.x() == -1)
+			position = self.posicionInicial()
+	}
+	
+	method chocar(){
+		juego.terminar()
+	}
+    method detener(){
+		game.removeTickEvent("moverCactus")
 	}
 }
