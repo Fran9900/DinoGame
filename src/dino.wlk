@@ -147,7 +147,7 @@ object pajaro {
 	 
 	var position = self.posicionInicial()
 
-	method image() = "cactus.png"
+	method image() = "Pajaro.png"
 	method position() = position
 	
 	method posicionInicial() = game.at(game.width()-3,suelo.position().up(1).y())
